@@ -15,9 +15,9 @@ RUN npm run build
 # Etapa 3: Imagen final para producción
 FROM node:18-alpine3.15 AS runner
 WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
-RUN npm install --only=production
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
+COPY package.json ./
 
 EXPOSE 3000
 CMD ["node", "dist/main"]
