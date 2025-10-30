@@ -1,0 +1,65 @@
+version: '3.8'
+
+secrets:
+  jwt_secret:
+    file: ./jwt_secret
+  mongo_db_name:
+    file: ./mongo_db_name
+  jwt_access_expiration:
+    file: ./jwt_access_expiration
+  jwt_refresh_expiration:
+    file: ./jwt_refresh_expiration
+
+services:
+  nestapp:
+    image: lyen33/nest-cnp3:1.0
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      PORT: ${PORT}
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DB_NAME_FILE: /run/secrets/mongo_db_name
+      JWT_SECRET_FILE: /run/secrets/jwt_secret
+      JWT_ACCESS_EXPIRATION_FILE: /run/secrets/jwt_access_expiration
+      JWT_REFRESH_EXPIRATION_FILE: /run/secrets/jwt_refresh_expiration
+    secrets:
+      - jwt_secret
+      - mongo_db_name
+      - jwt_access_expiration
+      - jwt_refresh_expiration
+    networks:
+      - cnp3-net
+
+  mongo:
+    image: mongo:latest
+    restart: always
+    deploy:
+      replicas: 1
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - cnp3-net
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  mongo_data:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=nfssrv01,rw"
+      device: ":/data/docker-vols/group08/mongo_data"
+
+networks:
+  cnp3-net:
+    driver: overlay
