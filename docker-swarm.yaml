@@ -58,7 +58,7 @@ volumes:
     driver_opts:
       type: "nfs"
       o: "addr=nfssrv01,rw"
-      device: ":/data/docker-vols/group08/mongo_data"
+      device: ":/data/docker-vols/group10/mongo_data"
 
 networks:
   cnp3-net:
