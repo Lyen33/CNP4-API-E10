@@ -35,6 +35,7 @@ import {
 export class VariablesController {
   constructor(private readonly variablesService: VariablesService) {}
 
+  // ✅ Requiere autenticación, cualquier rol
   @Get()
   @Version('1')
   @ApiOperation({ summary: 'Listar todas las variables de un entorno paginadas' })
@@ -50,6 +51,7 @@ export class VariablesController {
     return await this.variablesService.listAll(paginationDto, baseUrl, envName);
   }
 
+  // 🔒 Solo rol 'admin' puede crear
   @Post()
   @Version('1')
   @Roles('admin')
@@ -62,6 +64,7 @@ export class VariablesController {
     return await this.variablesService.create(createVariableDto, envName);
   }
 
+  // ✅ Requiere autenticación, cualquier rol
   @Get(':var_name')
   @Version('1')
   @ApiOperation({ summary: 'Obtener los detalles de una variable por nombre' })
@@ -74,6 +77,7 @@ export class VariablesController {
     return await this.variablesService.findOne(varName, envName);
   }
 
+  // 🔒 Solo rol 'admin' puede hacer total update
   @Put(':var_name')
   @Version('1')
   @Roles('admin')
@@ -88,6 +92,7 @@ export class VariablesController {
     return await this.variablesService.totalUpdate(varName, createVariableDto, envName);
   }
 
+  // 🔒 Solo rol 'admin' puede hacer partial update
   @Patch(':var_name')
   @Version('1')
   @Roles('admin')
@@ -102,6 +107,7 @@ export class VariablesController {
     return await this.variablesService.partialUpdate(varName, updateEnviromentDto, envName);
   }
 
+  // 🔒 Solo rol 'admin' puede eliminar
   @Delete(':var_name')
   @Version('1')
   @Roles('admin')
