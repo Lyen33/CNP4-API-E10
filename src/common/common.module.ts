@@ -15,8 +15,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: (config: ConfigService) => ({
         uri: config.get<string>('MONGO_URI'),
         dbName: config.get<string>('MONGO_DB_NAME'),
-        retryAttempts: 10,
-        retryDelay: 5000
       }),
     }),
     MongooseModule.forFeature([{ name: Enviroment.name, schema: EnviromentSchema }]),
