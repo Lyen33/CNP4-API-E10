@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  nestapp:
+    depends_on:
+      - mongo
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nest-cnp3
+    container_name: nest-cnp3-app
+    restart: always
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      PORT: ${PORT}
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DB_NAME: ${MONGO_DB_NAME}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ACCESS_EXPIRATION: ${JWT_ACCESS_EXPIRATION}
+      JWT_REFRESH_EXPIRATION: ${JWT_REFRESH_EXPIRATION}
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - cnp3-net
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo-cnp3
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - cnp3-net
+
+volumes:
+  mongo_data:
+
+networks:
+  cnp3-net:
+    driver: bridge
