@@ -9,11 +9,11 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<any> {
     // Aquí deberiamos consultar la base de datos, pero que pereza xd
-    const user = { username: 'admin', passwordHash: await bcrypt.hash('1234', 10) };
+    const user = { username: 'admin', passwordHash: await bcrypt.hash('1234', 10), role:'admin' };
 
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (isMatch) {
-      return { username: user.username };
+      return { username: user.username, role: 'admin' };
     }
     return null;
   }

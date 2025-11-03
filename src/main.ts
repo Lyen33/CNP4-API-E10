@@ -22,14 +22,16 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config_swag);
 
+  app.setGlobalPrefix('api');
+
   // Endpoint /schema/
-  app.use('/schema', (req, res) => {
+  app.use('/api/v1/schema', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(document);
   });
 
   // Endpoint /swagger-ui/
-  SwaggerModule.setup('/swagger-ui', app, document);
+  SwaggerModule.setup('/api/v1/swagger-ui', app, document);
 
   app.setGlobalPrefix('api');
 

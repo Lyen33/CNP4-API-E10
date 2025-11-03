@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Version } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
   ApiTags,
@@ -13,6 +13,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post()
+  @Version('1')
   @ApiOperation({ summary: 'Autenticar usuario y obtener accessToken + refreshToken' })
   @ApiBody({
     schema: {
@@ -33,6 +34,7 @@ export class AuthController {
   }
 
   @Post('refresh')
+  @Version('1')
   @ApiOperation({ summary: 'Obtener nuevo accessToken usando refreshToken' })
   @ApiBody({
     schema: {
@@ -50,6 +52,7 @@ export class AuthController {
   }
 
   @Post('verify')
+  @Version('1')
   @ApiOperation({ summary: 'Verificar si un accessToken es válido' })
   @ApiBody({
     schema: {

@@ -50,3 +50,20 @@ Este proyecto está listo para ejecutarse en producción usando contenedores Doc
 
 - Swagger UI: http://localhost:3000/swagger-ui
 - Endpoint de autenticación: POST http://localhost:3000/token
+
+
+## 🦌 Pasos para probar la API :
+
+Para testear la API, tenga en cuenta las siguientes consideraciones
+
+- Todos los endpoints empiezan con /api/v1.
+
+- Solo hay un usuario registrado, el cual es administrador y cuyos credenciales (los cuales deben ser enviados a /api/v1/token para obtener el token de autenticación) son:
+
+   ```bash
+   {
+      "username": "admin",
+      "password": "1234"
+   }
+
+- Para acceder a la documentación de swagger debe ingresar al endpoint /api/v1/swagger-ui#
