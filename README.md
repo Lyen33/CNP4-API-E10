@@ -46,11 +46,6 @@ Este proyecto está listo para ejecutarse en producción usando contenedores Doc
    ```bash
    docker compose up -d
 
-2. **Acceder a la API: Una vez desplegado, la API estará disponible en http://localhost:3000 (o en la IP pública de tu máquina si estás en una VM o servidor).**:
-
-- Swagger UI: http://localhost:3000/swagger-ui
-- Endpoint de autenticación: POST http://localhost:3000/token
-
 
 ## 🦌 Pasos para probar la API :
 
