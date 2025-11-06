@@ -12,6 +12,12 @@ async function bootstrap() {
   const config_env = app.get(ConfigService);
   const port = config_env.get<number>('PORT') || 3000;
   
+  app.setGlobalPrefix('api');
+
+  app.enableVersioning({
+    type: VersioningType.URI, 
+  });
+
   //configuracion de swagger
   const config_swag = new DocumentBuilder()
     .setTitle('CNP3 RESTful API')
@@ -22,8 +28,6 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config_swag);
 
-  app.setGlobalPrefix('api');
-
   // Endpoint /schema/
   app.use('/api/v1/schema', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
@@ -32,12 +36,6 @@ async function bootstrap() {
 
   // Endpoint /swagger-ui/
   SwaggerModule.setup('/api/v1/swagger-ui', app, document);
-
-  app.setGlobalPrefix('api');
-
-  app.enableVersioning({
-    type: VersioningType.URI, 
-  });
 
   app.useGlobalPipes(  
     new ValidationPipe({ 
