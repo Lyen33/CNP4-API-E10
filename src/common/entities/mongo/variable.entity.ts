@@ -41,6 +41,7 @@ export class Variable extends Document{
     is_sensitive: boolean
 
     @Prop({
+        index: true,
         required: true,
     })
     enviromentName: string //nombre del Enviroment Padre
@@ -48,3 +49,5 @@ export class Variable extends Document{
 }
 
 export const VariableSchema = SchemaFactory.createForClass(Variable);
+
+VariableSchema.index({ enviromentName: 1, name: 1 }, { unique: true });

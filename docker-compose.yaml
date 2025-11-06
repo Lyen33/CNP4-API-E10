@@ -23,7 +23,7 @@ services:
       - cnp3-net
 
   mongo:
-    image: mongo:latest
+    image: mongo:4.4
     container_name: mongo-cnp3
     restart: always
     ports:

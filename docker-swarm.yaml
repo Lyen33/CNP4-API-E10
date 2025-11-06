@@ -36,7 +36,7 @@ services:
       - cnp3-net
 
   mongo:
-    image: mongo:latest
+    image: mongo:4.4
     restart: always
     deploy:
       replicas: 1

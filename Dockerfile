@@ -3,7 +3,7 @@ FROM node:18-alpine3.15 AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 # Etapa 2: Compilar la app
 FROM node:18-alpine3.15 AS builder
