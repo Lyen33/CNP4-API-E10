@@ -19,5 +19,8 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY package.json ./
 
+RUN chmod +x /usr/src/app \
+    && chmod g+w /usr/src/app
+
 EXPOSE 3000
 CMD ["node", "dist/main"]

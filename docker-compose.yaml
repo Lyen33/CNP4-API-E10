@@ -12,6 +12,7 @@ services:
     restart: always
     ports:
       - "${PORT}:${PORT}"
+    user: "8943520"
     environment:
       PORT: ${PORT}
       MONGO_URI: mongodb://mongo:27017
