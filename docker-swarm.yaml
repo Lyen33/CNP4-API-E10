@@ -1,15 +1,5 @@
 version: '3.8'
 
-secrets:
-  jwt_secret:
-    file: ./jwt_secret
-  mongo_db_name:
-    file: ./mongo_db_name
-  jwt_access_expiration:
-    file: ./jwt_access_expiration
-  jwt_refresh_expiration:
-    file: ./jwt_refresh_expiration
-
 services:
   nestapp:
     image: lyen33/nest-cnp3:1.0
@@ -22,16 +12,11 @@ services:
       - "${PORT}:${PORT}"
     environment:
       PORT: ${PORT}
-      MONGO_URI: mongodb://mongo:27017
-      MONGO_DB_NAME_FILE: /run/secrets/mongo_db_name
-      JWT_SECRET_FILE: /run/secrets/jwt_secret
-      JWT_ACCESS_EXPIRATION_FILE: /run/secrets/jwt_access_expiration
-      JWT_REFRESH_EXPIRATION_FILE: /run/secrets/jwt_refresh_expiration
-    secrets:
-      - jwt_secret
-      - mongo_db_name
-      - jwt_access_expiration
-      - jwt_refresh_expiration
+      MONGO_URI: ${MONGO_URI}
+      MONGO_DB_NAME: ${MONGO_DB_NAME}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ACCESS_EXPIRATION: ${JWT_ACCESS_EXPIRATION}
+      JWT_REFRESH_EXPIRATION: ${JWT_REFRESH_EXPIRATION}
     networks:
       - cnp3-net
 
@@ -40,8 +25,6 @@ services:
     restart: always
     deploy:
       replicas: 1
-    ports:
-      - 27017:27017
     volumes:
       - mongo_data:/data/db
     networks:
